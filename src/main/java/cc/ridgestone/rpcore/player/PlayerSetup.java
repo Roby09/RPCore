@@ -85,14 +85,14 @@ public class PlayerSetup implements Listener {
                 player.sendMessage(ChatColor.RED + "No numeric value found. Please only use numbers.");
                 return;
             }
-            if (student && !(age >= 18 && age <=26)) {
+            int age = Integer.parseInt(event.getMessage());
+            if (student && age < 18 || age > 26) {
                 player.sendMessage(ChatColor.RED + "A student can only be 18-26 years old");
                 return;
-            } else if (!student && !(age >= 20 && age <= 80)) {
+            } else if (!student && age < 20 || age > 80) {
                 player.sendMessage(ChatColor.RED + "An adult can only be 20-80 years old");
                 return;
             }
-            int age = Integer.parseInt(event.getMessage());
             player.sendMessage(ChatColor.GREEN + "Successfully your character's age to: " + ChatColor.BOLD + "" + age);
             sendSpace();
             completableFuture.complete(new Character(name, bio, student, age, player.getLocation()));
