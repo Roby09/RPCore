@@ -76,7 +76,7 @@ public class PlayerManager {
     public RPPlayer getRpPlayer(UUID uuid) {
         RPPlayer rpPlayer = null;
         for (RPPlayer _rpPlayer : players) {
-            if (rpPlayer.getUuid().equals(_rpPlayer.getUuid()))
+            if (_rpPlayer.getUuid().equals(uuid))
                 rpPlayer = _rpPlayer;
         }
         return rpPlayer;
