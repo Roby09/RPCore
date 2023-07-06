@@ -66,6 +66,8 @@ public class PlayerManager {
             RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locX", character.getLocation().getBlockZ());
             RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locY", character.getLocation().getBlockY());
             RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locZ", character.getLocation().getBlockZ());
+
+            i++;
         }
 
         RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".currentCharacter", rpPlayer.getCurrentCharacterInt());
