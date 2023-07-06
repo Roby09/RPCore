@@ -6,10 +6,12 @@ import cc.ridgestone.rpcore.player.PlayerSetup;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 public class PlayerListener implements Listener {
 
@@ -41,4 +43,11 @@ public class PlayerListener implements Listener {
         if (event.getWhoClicked() instanceof Player && event.getClickedInventory() != null && event.getCurrentItem() != null)
             event.setCancelled(event.getCurrentItem().isSimilar(CustomItem.COMPASS.getItem()));
     }
+
+    @EventHandler
+    public void swapItem(PlayerSwapHandItemsEvent event) {
+        if (event.getOffHandItem() != null)
+            event.setCancelled(event.getOffHandItem().isSimilar(CustomItem.COMPASS.getItem()));
+    }
+
 }

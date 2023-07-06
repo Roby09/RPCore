@@ -7,7 +7,14 @@ import org.bukkit.inventory.ItemStack;
 
 public enum CustomItem {
 
-    COMPASS(new ItemBuilder(new ItemStack(Material.COMPASS)).withName(ChatColor.GRAY + "Menu").getItemStack());
+    COMPASS(new ItemBuilder(new ItemStack(Material.COMPASS)).withName(ChatColor.GRAY + "Menu").getItemStack()),
+    FILLER_DARK_GREEN(new ItemBuilder(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).withName(ChatColor.YELLOW + "" + ChatColor.MAGIC + "-").getItemStack()),
+    FILLER_GREEN(new ItemBuilder(new ItemStack(Material.LIME_STAINED_GLASS_PANE)).withName(ChatColor.YELLOW + "" + ChatColor.MAGIC + "-").getItemStack()),
+    FILLER_WHITE(new ItemBuilder(new ItemStack(Material.WHITE_STAINED_GLASS_PANE)).withName(ChatColor.YELLOW + "" + ChatColor.MAGIC + "-").getItemStack()),
+    ROLE(new ItemBuilder(new ItemStack(Material.BOOK)).withName(ChatColor.GRAY + "Roles").getItemStack()),
+    SETTINGS(new ItemBuilder(new ItemStack(Material.CRIMSON_BUTTON)).withName(ChatColor.GRAY + "Settings").getItemStack()),
+    SHOP(new ItemBuilder(new ItemStack(Material.SUNFLOWER)).withName(ChatColor.GRAY + "Shop").getItemStack()),
+    CLOSE_MENU(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Close Menu").getItemStack());
 
     private ItemStack item;
 
