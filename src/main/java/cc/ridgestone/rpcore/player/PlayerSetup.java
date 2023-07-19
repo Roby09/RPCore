@@ -25,7 +25,7 @@ public class PlayerSetup implements Listener {
     private String name;
     private String bio;
     private boolean student;
-    private int age;
+    private String role;
 
     private Character character;
 
@@ -60,14 +60,15 @@ public class PlayerSetup implements Listener {
                 sendSpace();
                 setupStage = 3;
                 break;
-
             case 3:
                 if (event.getMessage().equalsIgnoreCase("adult")) {
                     student = false;
+                    role = "Adult";
                     player.sendMessage(ChatColor.GREEN + "Successfully your character's role to: " + ChatColor.BOLD + "adult");
                     player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's age: 20-80");
                 } else if (event.getMessage().equalsIgnoreCase("student")) {
                     student = true;
+                    role = "Student";
                     player.sendMessage(ChatColor.GREEN + "Successfully your character's role to: " + ChatColor.BOLD + "student");
                     player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's age: [Year 1: 18-22] [Year 2: 19-23] [Year 3: 20-24] [Year 4: [21-26]");
                 } else {
@@ -85,16 +86,20 @@ public class PlayerSetup implements Listener {
                     return;
                 }
                 int age = Integer.parseInt(event.getMessage());
-                if (student && age < 18 || age > 26) {
-                    player.sendMessage(ChatColor.RED + "A student can only be 18-26 years old");
-                    return;
-                } else if (!student && age < 20 || age > 80) {
-                    player.sendMessage(ChatColor.RED + "An adult can only be 20-80 years old");
-                    return;
+                if (student) {
+                    if (age < 18 || age > 26) {
+                        player.sendMessage(ChatColor.RED + "A student can only be 18-26 years old");
+                        return;
+                    }
+                } else {
+                    if (age < 20 || age > 80) {
+                        player.sendMessage(ChatColor.RED + "An adult can only be 20-80 years old");
+                        return;
+                    }
                 }
                 player.sendMessage(ChatColor.GREEN + "Successfully your character's age to: " + ChatColor.BOLD + "" + age);
                 sendSpace();
-                completableFuture.complete(new Character(name, bio, student, age, player.getLocation()));
+                completableFuture.complete(new Character(name, bio, role, age, player.getLocation()));
                 player.sendMessage(ChatColor.GREEN + "Character " + name + " created successfully");
                 cancel();
                 break;

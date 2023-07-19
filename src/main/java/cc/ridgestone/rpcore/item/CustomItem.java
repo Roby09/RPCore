@@ -14,6 +14,10 @@ public enum CustomItem {
     ROLE(new ItemBuilder(new ItemStack(Material.BOOK)).withName(ChatColor.GRAY + "Roles").getItemStack()),
     SETTINGS(new ItemBuilder(new ItemStack(Material.CRIMSON_BUTTON)).withName(ChatColor.GRAY + "Settings").getItemStack()),
     SHOP(new ItemBuilder(new ItemStack(Material.SUNFLOWER)).withName(ChatColor.GRAY + "Shop").getItemStack()),
+    CHARACTER_1(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 1").getItemStack()),
+    CHARACTER_2(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 2").getItemStack()),
+    CHARACTER_3(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 3").getItemStack()),
+    CHARACTER_4(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 4").getItemStack()),
     CLOSE_MENU(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Close Menu").getItemStack());
 
     private ItemStack item;
