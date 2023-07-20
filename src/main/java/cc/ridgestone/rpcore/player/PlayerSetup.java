@@ -36,6 +36,7 @@ public class PlayerSetup implements Listener {
         this.player = player;
         Bukkit.getPluginManager().registerEvents(this, RPCore.i);
         player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's name: ex (John Bill)");
+        RPCore.i.getPlayerManager().getPlayersInSetup().add(player);
     }
 
     @EventHandler
@@ -99,7 +100,7 @@ public class PlayerSetup implements Listener {
                 }
                 player.sendMessage(ChatColor.GREEN + "Successfully your character's age to: " + ChatColor.BOLD + "" + age);
                 sendSpace();
-                completableFuture.complete(new Character(name, bio, role, age, player.getLocation()));
+                completableFuture.complete(new Character(name, bio, role, age, player.getLocation(), player.getInventory().getContents(), player.getInventory().getArmorContents()));
                 player.sendMessage(ChatColor.GREEN + "Character " + name + " created successfully");
                 cancel();
                 break;
@@ -132,6 +133,7 @@ public class PlayerSetup implements Listener {
 
     public void cancel() {
         HandlerList.unregisterAll(this);
+        RPCore.i.getPlayerManager().getPlayersInSetup().remove(player);
     }
 
     public void sendSpace() {

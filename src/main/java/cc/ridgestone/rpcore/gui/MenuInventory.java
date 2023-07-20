@@ -1,6 +1,9 @@
 package cc.ridgestone.rpcore.gui;
 
+import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.item.CustomItem;
+import cc.ridgestone.rpcore.player.RPPlayer;
+import cc.ridgestone.rpcore.util.ItemBuilder;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -36,8 +39,16 @@ public class MenuInventory implements InventoryHolder {
         meta.setDisplayName(ChatColor.GRAY + "Characters");
         skull.setItemMeta(meta);
 
+        RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
+        String name = ChatColor.GRAY + "Name: " + rpPlayer.getCurrentCharacter().getName();
+        String bio = ChatColor.GRAY + "Bio: " + rpPlayer.getCurrentCharacter().getBio();
+        String role = ChatColor.GRAY + "Role: " + rpPlayer.getCurrentCharacter().getRole();
+        String age = ChatColor.GRAY + "Age: " + rpPlayer.getCurrentCharacter().getAge();
+
+        ItemStack info = new ItemBuilder(new ItemStack(Material.BOOK)).withName(ChatColor.YELLOW + "Character Info").withLore(name, bio, role, age).getItemStack();
+
         inventory.setItem(10, skull);
-        inventory.setItem(12, CustomItem.ROLE.getItem());
+        inventory.setItem(12, info);
         inventory.setItem(14, CustomItem.SETTINGS.getItem());
         inventory.setItem(16, CustomItem.SHOP.getItem());
         inventory.setItem(26, CustomItem.CLOSE_MENU.getItem());

@@ -1,7 +1,8 @@
 package cc.ridgestone.rpcore;
 
 import cc.ridgestone.rpcore.config.ConfigManager;
-import cc.ridgestone.rpcore.listener.GuiListener;
+import cc.ridgestone.rpcore.listener.CharacterMenuListener;
+import cc.ridgestone.rpcore.listener.MainMenuListener;
 import cc.ridgestone.rpcore.listener.PlayerListener;
 import cc.ridgestone.rpcore.player.PlayerManager;
 import org.bukkit.Bukkit;
@@ -36,7 +37,8 @@ public class RPCore extends JavaPlugin {
         createCustomConfig();
 
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Bukkit.getPluginManager().registerEvents(new GuiListener(), this);
+        Bukkit.getPluginManager().registerEvents(new MainMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CharacterMenuListener(), this);
     }
 
     private void createCustomConfig() {

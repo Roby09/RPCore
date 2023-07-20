@@ -1,26 +1,26 @@
 package cc.ridgestone.rpcore.player;
 
 import cc.ridgestone.rpcore.RPCore;
+import cc.ridgestone.rpcore.util.SerializationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerManager {
 
     private List<RPPlayer> players = new ArrayList<>();
+    private List<Player> playersInSetup = new ArrayList<>();
 
     public void loadPlayer(Player player) {
-        List<Character> characters = new ArrayList<>();
+        Map<Integer, Character> characters = new HashMap<>();
         for (int i = 0; i < 3; i++) {
             if (RPCore.i.getPlayerConfig().contains(player.getUniqueId().toString() + ".character." + i + ".name")) {
                 String name = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".name");
                 String bio = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".bio");
-                boolean student = RPCore.i.getPlayerConfig().getBoolean(player.getUniqueId().toString() + ".character." + i + ".student");
+                String role = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".role");
                 int age = RPCore.i.getPlayerConfig().getInt(player.getUniqueId().toString() + ".character." + i + ".age");
 
                 String world = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".world");
@@ -28,7 +28,14 @@ public class PlayerManager {
                 int y = RPCore.i.getPlayerConfig().getInt(player.getUniqueId().toString() + ".character." + i + ".locY");
                 int z = RPCore.i.getPlayerConfig().getInt(player.getUniqueId().toString() + ".character." + i + ".locZ");
 
-                characters.add(new Character(name, bio, student, age, new Location(Bukkit.getWorld(world), x,y,z)));
+                String inventoryContent64 = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".inventoryContent");
+                String armorContent64 = RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".character." + i + ".inventoryArmor");
+
+                try {
+                    characters.put(i, new Character(name, bio, role, age, new Location(Bukkit.getWorld(world), x,y,z), SerializationUtil.itemStackArrayFromBase64(inventoryContent64), SerializationUtil.itemStackArrayFromBase64(armorContent64)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
@@ -42,37 +49,12 @@ public class PlayerManager {
     }
 
     public void registerPlayer(UUID uuid, Character mainCharacter) {
-        List<Character> charactersList = new ArrayList<>();
-        charactersList.add(mainCharacter);
-        RPPlayer rpPlayer = new RPPlayer(uuid, charactersList, 0);
+        Map<Integer, Character> characterMap = new HashMap();
+        characterMap.put(0, mainCharacter);
+        RPPlayer rpPlayer = new RPPlayer(uuid, characterMap, 0);
         players.add(rpPlayer);
-
-        savePlayer(rpPlayer);
+        rpPlayer.saveCurrentCharacter();
         Bukkit.getLogger().info("Registered player " + uuid);
-    }
-
-    public void savePlayer(RPPlayer rpPlayer) {
-        //Save the location before saving
-        rpPlayer.getCurrentCharacter().setLocation(Bukkit.getPlayer(rpPlayer.getUuid()).getLocation());
-        //TODO save inventory
-
-        int  i = 0;
-        for (Character character : rpPlayer.getCharacters()) {
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".name", character.getName());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".bio", character.getBio());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".student", character.isStudent());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".age", character.getAge());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".world", character.getLocation().getWorld().getName());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locX", character.getLocation().getBlockZ());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locY", character.getLocation().getBlockY());
-            RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".character." + i + ".locZ", character.getLocation().getBlockZ());
-
-            i++;
-        }
-
-        RPCore.i.getPlayerConfig().set(rpPlayer.getUuid().toString() + ".currentCharacter", rpPlayer.getCurrentCharacterInt());
-
-        RPCore.i.savePlayerFile();
     }
 
     public RPPlayer getRpPlayer(UUID uuid) {
@@ -84,4 +66,7 @@ public class PlayerManager {
         return rpPlayer;
     }
 
+    public List<Player> getPlayersInSetup() {
+        return playersInSetup;
+    }
 }
