@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -48,6 +49,10 @@ public class PlayerSetup implements Listener {
 
         switch (setupStage) {
             case 1:
+                if (event.getMessage().split(" ").length - 1 != 1) {
+                    player.sendMessage(ChatColor.RED + "Name format should be: First_Name Second_Name");
+                    return;
+                }
                 name = event.getMessage();
                 player.sendMessage(ChatColor.GREEN + "Successfully set your character's name to: " + ChatColor.BOLD + "" + name);
                 player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's bio: ex (John Bill is tall.)");
@@ -100,7 +105,7 @@ public class PlayerSetup implements Listener {
                 }
                 player.sendMessage(ChatColor.GREEN + "Successfully your character's age to: " + ChatColor.BOLD + "" + age);
                 sendSpace();
-                completableFuture.complete(new Character(name, bio, role, age, player.getLocation(), player.getInventory().getContents(), player.getInventory().getArmorContents()));
+                completableFuture.complete(new Character(name, bio, role, age, player.getLocation(), new ItemStack[0], new ItemStack[0]));
                 player.sendMessage(ChatColor.GREEN + "Character " + name + " created successfully");
                 cancel();
                 break;
