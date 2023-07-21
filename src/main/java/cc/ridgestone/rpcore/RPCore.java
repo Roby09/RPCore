@@ -1,9 +1,14 @@
 package cc.ridgestone.rpcore;
 
+import cc.ridgestone.rpcore.command.CardCommand;
+import cc.ridgestone.rpcore.command.CharacterCommand;
+import cc.ridgestone.rpcore.command.RollCommand;
 import cc.ridgestone.rpcore.config.ConfigManager;
-import cc.ridgestone.rpcore.listener.CharacterMenuListener;
-import cc.ridgestone.rpcore.listener.MainMenuListener;
+import cc.ridgestone.rpcore.listener.gui.CharacterMenuListener;
+import cc.ridgestone.rpcore.listener.ChatListener;
+import cc.ridgestone.rpcore.listener.gui.MainMenuListener;
 import cc.ridgestone.rpcore.listener.PlayerListener;
+import cc.ridgestone.rpcore.placeholder.RPCorePlaceholders;
 import cc.ridgestone.rpcore.player.PlayerManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -39,6 +44,15 @@ public class RPCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getPluginManager().registerEvents(new MainMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new CharacterMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+
+        getCommand("card").setExecutor(new CardCommand());
+        getCommand("character").setExecutor(new CharacterCommand());
+        getCommand("roll").setExecutor(new RollCommand());
+
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new RPCorePlaceholders(this).register();
+        }
     }
 
     private void createCustomConfig() {
