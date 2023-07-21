@@ -9,9 +9,9 @@ public class ConfigManager {
         FileConfiguration config = RPCore.i.getInstanceConfig();
 
         for(Variable variable : Variable.values()) {
-            config.addDefault(variable.toString(), "value");
+            config.addDefault(variable.toString(), variable.getValue());
             if(config.get(variable.toString()) == null)
-                config.set(variable.toString(), "value");
+                config.set(variable.toString(), variable.getValue());
         }
         config.options().copyDefaults(true);
         RPCore.i.saveConfig();

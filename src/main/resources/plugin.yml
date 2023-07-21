@@ -3,7 +3,12 @@ main: ${project.groupId}.RPCore
 description: ${project.description}
 version: ${project.version}
 author: roby08
+depend: [PlaceholderAPI]
 api-version: 1.18
 commands:
-  plot:
-    description: plot-tools main command
+  card:
+    description: Display character information.
+  character:
+    description: Change character information.
+  roll:
+    description: Roll a random number.
