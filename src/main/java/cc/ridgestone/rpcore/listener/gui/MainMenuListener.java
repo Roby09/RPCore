@@ -1,8 +1,9 @@
-package cc.ridgestone.rpcore.listener;
+package cc.ridgestone.rpcore.listener.gui;
 
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.gui.CharacterInventory;
 import cc.ridgestone.rpcore.gui.MenuInventory;
+import cc.ridgestone.rpcore.gui.SettingsInventory;
 import cc.ridgestone.rpcore.item.CustomItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -39,7 +40,7 @@ public class MainMenuListener implements Listener {
                 break;
             }
             case 14 -> {
-                //TODO settings
+                player.openInventory(new SettingsInventory(player).getInventory());
                 break;
             }
             case 16 -> {

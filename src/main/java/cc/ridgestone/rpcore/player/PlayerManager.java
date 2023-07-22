@@ -3,6 +3,7 @@ package cc.ridgestone.rpcore.player;
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.util.SerializationUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -40,7 +41,8 @@ public class PlayerManager {
         }
 
         int currentCharacter = RPCore.i.getPlayerConfig().getInt(player.getUniqueId().toString() + ".currentCharacter");
-        players.add(new RPPlayer(player.getUniqueId(), characters, currentCharacter));
+        ChatColor emoteColor = ChatColor.valueOf(RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".emoteColor"));
+        players.add(new RPPlayer(player.getUniqueId(), characters, currentCharacter, emoteColor));
     }
 
     public void removePlayer(Player player) {
@@ -51,8 +53,10 @@ public class PlayerManager {
     public void registerPlayer(UUID uuid, Character mainCharacter) {
         Map<Integer, Character> characterMap = new HashMap();
         characterMap.put(0, mainCharacter);
-        RPPlayer rpPlayer = new RPPlayer(uuid, characterMap, 0);
+        RPPlayer rpPlayer = new RPPlayer(uuid, characterMap, 0, ChatColor.YELLOW);
         players.add(rpPlayer);
+        RPCore.i.getPlayerConfig().set(uuid.toString() + ".emoteColor", rpPlayer.getEmoteColor().name());
+        RPCore.i.savePlayerFile();
         rpPlayer.saveCurrentCharacter();
         Bukkit.getLogger().info("Registered player " + uuid);
     }

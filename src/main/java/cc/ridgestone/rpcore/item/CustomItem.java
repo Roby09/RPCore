@@ -18,7 +18,21 @@ public enum CustomItem {
     CHARACTER_2(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 2").getItemStack()),
     CHARACTER_3(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 3").getItemStack()),
     CHARACTER_4(new ItemBuilder(new ItemStack(Material.PLAYER_HEAD)).withName(ChatColor.GRAY + "Character 4").getItemStack()),
-    CLOSE_MENU(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Close Menu").getItemStack());
+    OOC_ON(new ItemBuilder(new ItemStack(Material.GREEN_WOOL)).withName(ChatColor.GRAY + "Toggle OOC").getItemStack()),
+    OOC_OFF(new ItemBuilder(new ItemStack(Material.RED_WOOL)).withName(ChatColor.GRAY + "Toggle OOC").getItemStack()),
+    EMOTE_SETTINGS(new ItemBuilder(new ItemStack(Material.BLUE_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Emote Settings").getItemStack()),
+    CLOSE_MENU(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Close Menu").getItemStack()),
+
+    EMOTE_PINK(new ItemBuilder(new ItemStack(Material.PINK_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Pink").getItemStack()),
+    EMOTE_GREEN(new ItemBuilder(new ItemStack(Material.GREEN_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Green").getItemStack()),
+    EMOTE_YELLOW(new ItemBuilder(new ItemStack(Material.YELLOW_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Yellow").getItemStack()),
+    EMOTE_LIGHT_BLUE(new ItemBuilder(new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Light Blue").getItemStack()),
+    EMOTE_PURPLE(new ItemBuilder(new ItemStack(Material.PURPLE_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Purple").getItemStack()),
+    EMOTE_RED(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Red").getItemStack()),
+    EMOTE_ORANGE(new ItemBuilder(new ItemStack(Material.ORANGE_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Orange").getItemStack()),
+    EMOTE_BLUE(new ItemBuilder(new ItemStack(Material.BLUE_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Blue").getItemStack()),
+    EMOTE_DARK_RED(new ItemBuilder(new ItemStack(Material.RED_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Dark Red").getItemStack()),
+    EMOTE_LIME(new ItemBuilder(new ItemStack(Material.LIME_STAINED_GLASS_PANE)).withName(ChatColor.GRAY + "Lime").getItemStack());
 
     private ItemStack item;
 

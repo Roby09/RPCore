@@ -1,8 +1,6 @@
 package cc.ridgestone.rpcore.player;
 
 import cc.ridgestone.rpcore.RPCore;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -15,8 +13,6 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.concurrent.CompletableFuture;
 
 public class PlayerSetup implements Listener {
