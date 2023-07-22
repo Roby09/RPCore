@@ -3,11 +3,16 @@ package cc.ridgestone.rpcore;
 import cc.ridgestone.rpcore.command.CardCommand;
 import cc.ridgestone.rpcore.command.CharacterCommand;
 import cc.ridgestone.rpcore.command.RollCommand;
+import cc.ridgestone.rpcore.command.SetroleCommand;
+import cc.ridgestone.rpcore.command.chat.*;
 import cc.ridgestone.rpcore.config.ConfigManager;
+import cc.ridgestone.rpcore.listener.BioListener;
 import cc.ridgestone.rpcore.listener.gui.CharacterMenuListener;
 import cc.ridgestone.rpcore.listener.ChatListener;
+import cc.ridgestone.rpcore.listener.gui.EmoteMenuListener;
 import cc.ridgestone.rpcore.listener.gui.MainMenuListener;
 import cc.ridgestone.rpcore.listener.PlayerListener;
+import cc.ridgestone.rpcore.listener.gui.SettingsMenuListener;
 import cc.ridgestone.rpcore.placeholder.RPCorePlaceholders;
 import cc.ridgestone.rpcore.player.PlayerManager;
 import org.bukkit.Bukkit;
@@ -44,11 +49,23 @@ public class RPCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
         Bukkit.getPluginManager().registerEvents(new MainMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new CharacterMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new SettingsMenuListener(), this);
+        Bukkit.getPluginManager().registerEvents(new EmoteMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
+        Bukkit.getPluginManager().registerEvents(new BioListener(), this);
 
         getCommand("card").setExecutor(new CardCommand());
         getCommand("character").setExecutor(new CharacterCommand());
         getCommand("roll").setExecutor(new RollCommand());
+
+        getCommand("setrole").setExecutor(new SetroleCommand());
+
+        getCommand("shout").setExecutor(new ShoutCommand());
+        getCommand("whisper").setExecutor(new WhisperCommand());
+        getCommand("quiet").setExecutor(new QuietCommand());
+        getCommand("ooc").setExecutor(new OocCommand());
+        getCommand("looc").setExecutor(new LoocCommand());
+        getCommand("me").setExecutor(new MeCommand());
 
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new RPCorePlaceholders(this).register();
