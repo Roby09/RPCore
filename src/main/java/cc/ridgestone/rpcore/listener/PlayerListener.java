@@ -6,12 +6,11 @@ import cc.ridgestone.rpcore.player.PlayerSetup;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerSwapHandItemsEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerListener implements Listener {
 
@@ -26,6 +25,22 @@ public class PlayerListener implements Listener {
         } else {
             RPCore.i.getPlayerManager().loadPlayer(player);
         }
+    }
+
+    @EventHandler
+    public void playerRespawn(PlayerRespawnEvent event) {
+        event.getPlayer().getInventory().setItem(8, CustomItem.COMPASS.getItem());
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        ItemStack toRemove = null;
+        for (ItemStack item : event.getDrops()) {
+            if (item.isSimilar(CustomItem.COMPASS.getItem()))
+                toRemove = item;
+        }
+        if (toRemove != null)
+            event.getDrops().remove(toRemove);
     }
 
     @EventHandler
