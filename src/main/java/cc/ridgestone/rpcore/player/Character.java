@@ -23,6 +23,22 @@ public class Character {
         this.armorContent = armorContent;
     }
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
     public void setInventoryContent(ItemStack[] inventoryContent) {
         this.inventoryContent = inventoryContent;
     }

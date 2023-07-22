@@ -34,7 +34,6 @@ public class RollCommand implements CommandExecutor {
 
         int chatRange = Integer.parseInt(Variable.CHAT_RANGE.getValue());
 
-        player.sendMessage();
         ChatUtil.sendMessage(player.getLocation(), chatRange, ChatColor.YELLOW + String.valueOf(randomNumber));
         return false;
     }
