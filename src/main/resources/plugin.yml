@@ -12,3 +12,18 @@ commands:
     description: Change character information.
   roll:
     description: Roll a random number.
+  shout:
+    description: Shout a message.
+  whisper:
+    description: Whisper a message.
+  quiet:
+    description: Send a quiet message.
+  ooc:
+    description: Send a ooc message.
+  looc:
+    description: Send a local ooc message.
+  me:
+    description: Send a local emote message.
+  setrole:
+    description: Sets the role of a player
+

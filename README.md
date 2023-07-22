@@ -3,6 +3,7 @@ Permissions:
 - Character slot 3: rpslot.3
 - Character slot 4: rpslot.4
 - Emote colors: emotecolor.use
+- /setrole command: rpcore.setrole
 
 Placeholders:
 

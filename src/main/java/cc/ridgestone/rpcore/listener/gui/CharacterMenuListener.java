@@ -1,4 +1,4 @@
-package cc.ridgestone.rpcore.listener;
+package cc.ridgestone.rpcore.listener.gui;
 
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.gui.CharacterInventory;
@@ -67,6 +67,10 @@ public class CharacterMenuListener implements Listener {
                 break;
             }
             case 14 -> {
+                if (!player.hasPermission("rpslot.3")) {
+                    player.sendMessage(ChatColor.RED + "You do not have permission to switch to this slot");
+                    break;
+                }
                 if (rpPlayer.getCurrentCharacterInt() == 2) {
                     player.sendMessage(ChatColor.RED + "You're already " + rpPlayer.getCurrentCharacter().getName());
                     player.closeInventory();
@@ -87,6 +91,10 @@ public class CharacterMenuListener implements Listener {
                 break;
             }
             case 16 -> {
+                if (!player.hasPermission("rpslot.4")) {
+                    player.sendMessage(ChatColor.RED + "You do not have permission to switch to this slot");
+                    break;
+                }
                 if (rpPlayer.getCurrentCharacterInt() == 3) {
                     player.sendMessage(ChatColor.RED + "You're already " + rpPlayer.getCurrentCharacter().getName());
                     player.closeInventory();

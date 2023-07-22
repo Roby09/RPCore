@@ -1,13 +1,12 @@
 package cc.ridgestone.rpcore.player;
 
 import cc.ridgestone.rpcore.RPCore;
+import cc.ridgestone.rpcore.item.CustomItem;
 import cc.ridgestone.rpcore.util.SerializationUtil;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -16,23 +15,34 @@ public class RPPlayer {
     private UUID uuid;
     private Map<Integer, Character> characters;
     private int currentCharacter;
+    private boolean ooc = true;
+    private ChatColor emoteColor;
+    private boolean oocCooldown;
 
-    public RPPlayer(UUID uuid, Map<Integer, Character> characters, int currentCharacter) {
+    public RPPlayer(UUID uuid, Map<Integer, Character> characters, int currentCharacter, ChatColor emoteColor) {
         this.uuid = uuid;
         this.characters = characters;
         this.currentCharacter = currentCharacter;
+        this.emoteColor = emoteColor;
+        oocCooldown = false;
     }
 
     public void setCurrentCharacter(int currentCharacter) {
         Player player = Bukkit.getPlayer(uuid);
-        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole()));
+        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_")));
         saveCurrentCharacter();
 
         this.currentCharacter = currentCharacter;
 
-        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole()));
+        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_")));
         player.getInventory().setContents(getCurrentCharacter().getInventoryContent());
         player.getInventory().setArmorContents(getCurrentCharacter().getArmorContent());
+
+        RPCore.i.getPlayerConfig().set(uuid.toString() + ".currentCharacter", currentCharacter);
+        RPCore.i.savePlayerFile();
+
+        Bukkit.getScheduler().runTask(RPCore.i, () -> player.teleport(getCurrentCharacter().getLocation().add(0,1,1)));
+        player.getInventory().setItem(8, CustomItem.COMPASS.getItem());
     }
 
     public void saveCurrentCharacter() {
@@ -57,6 +67,21 @@ public class RPPlayer {
         RPCore.i.savePlayerFile();
     }
 
+    public void setOoc(boolean ooc) {
+        this.ooc = ooc;
+    }
+
+    public void setEmoteColor(ChatColor emoteColor) {
+        this.emoteColor = emoteColor;
+
+        RPCore.i.getPlayerConfig().set(uuid.toString() + ".emoteColor", emoteColor.name());
+        RPCore.i.savePlayerFile();
+    }
+
+    public void setOocCooldown(boolean oocCooldown) {
+        this.oocCooldown = oocCooldown;
+    }
+
     public Map<Integer, Character> getCharacters() {
         return characters;
     }
@@ -71,5 +96,17 @@ public class RPPlayer {
 
     public UUID getUuid() {
         return uuid;
+    }
+
+    public boolean ooc() {
+        return ooc;
+    }
+
+    public ChatColor getEmoteColor() {
+        return emoteColor;
+    }
+
+    public boolean isOocCooldown() {
+        return oocCooldown;
     }
 }
