@@ -42,7 +42,6 @@ public class CharacterMenuListener implements Listener {
                     break;
                 }
                 RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0);
-                player.sendMessage(ChatColor.GREEN + "Switched to character: " + RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter().getName());
                 player.closeInventory();
                 break;
             }
@@ -62,7 +61,6 @@ public class CharacterMenuListener implements Listener {
                     break;
                 }
                 RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(1);
-                player.sendMessage(ChatColor.GREEN + "Switched to character: " + RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter().getName());
                 player.closeInventory();
                 break;
             }
@@ -86,7 +84,6 @@ public class CharacterMenuListener implements Listener {
                     break;
                 }
                 RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(2);
-                player.sendMessage(ChatColor.GREEN + "Switched to character: " + RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter().getName());
                 player.closeInventory();
                 break;
             }
@@ -110,7 +107,6 @@ public class CharacterMenuListener implements Listener {
                     break;
                 }
                 RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(3);
-                player.sendMessage(ChatColor.GREEN + "Switched to character: " + RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter().getName());
                 player.closeInventory();
                 break;
             }
