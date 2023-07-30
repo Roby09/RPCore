@@ -27,49 +27,57 @@ public class ChatListener implements Listener {
 
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(event.getPlayer().getUniqueId());
 
-        if (containsWordsInQuotes(event.getMessage())) {
-            String message = replaceWordsInQuotesWithSurroundings(rpPlayer.getEmoteColor() + event.getMessage(), ChatColor.WHITE + "", rpPlayer.getEmoteColor() + "");
-            Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendMessage(event.getPlayer().getLocation(), Integer.parseInt(Variable.ME_RANGE.getValue()), message));
-            return;
+        switch (rpPlayer.getChatChannel()) {
+            case DEFAULT -> {
+                if (ChatUtil.containsWordsInQuotes(event.getMessage())) {
+                    String message = ChatUtil.replaceWordsInQuotesWithSurroundings(rpPlayer.getEmoteColor() + event.getMessage(), ChatColor.WHITE + "", rpPlayer.getEmoteColor() + "");
+                    String chatFormat = ChatColor.translateAlternateColorCodes('&', Variable.QUOTE_FORMAT.getValue().replace("%message%", message));
+                    String finalFormat = PlaceholderAPI.setPlaceholders(event.getPlayer(), chatFormat);
+                    Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendMessage(event.getPlayer().getLocation(), Integer.parseInt(Variable.ME_RANGE.getValue()), finalFormat));
+                } else if (event.getMessage().startsWith("*")) {
+                    Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendEmote(event.getPlayer(), range, rpPlayer.getEmoteColor() + event.getMessage()));
+                } else {
+                    Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendInCharacterMessage(event.getPlayer(), range, Variable.CHAT_FORMAT, null, event.getMessage()));
+                }
+                break;
+            }
+            case ME -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendEmote(event.getPlayer(), Integer.valueOf(Variable.ME_RANGE.getValue()), event.getMessage()));
+                break;
+            }
+            case QUIET -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendInCharacterMessage(event.getPlayer(), Integer.valueOf(Variable.QUIET_RANGE.getValue()), Variable.QUIET_FORMAT, Variable.QUIET_COLOR, event.getMessage().toLowerCase()));
+                break;
+            }
+            case SHOUT -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendInCharacterMessage(event.getPlayer(), Integer.valueOf(Variable.SHOUT_RANGE.getValue()), Variable.SHOUT_FORMAT, Variable.SHOUT_COLOR, event.getMessage().toUpperCase()));
+                break;
+            }
+            case WHISPER -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendInCharacterMessage(event.getPlayer(), Integer.valueOf(Variable.WHISPER_RANGE.getValue()), Variable.WHISPER_FORMAT, Variable.WHISPER_COLOR, event.getMessage().toLowerCase()));
+                break;
+            }
+            case OOC -> {
+                if (rpPlayer.isOocCooldown()) {
+                    event.getPlayer().sendMessage(ChatColor.RED + "You need to wait before you can send an OOC message again.");
+                    break;
+                }
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOocToAll(event.getPlayer(), event.getMessage()));
+                if (!event.getPlayer().hasPermission("ooc.bypass")) {
+                    rpPlayer.setOocCooldown(true);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> rpPlayer.setOocCooldown(false), 20 * Integer.valueOf(Variable.OOC_COOLDOWN.getValue()));
+                }
+                break;
+            }
+            case LOOC -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, event.getMessage()));
+                break;
+            }
+            case WOOC -> {
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, event.getMessage()));
+                break;
+            }
         }
-
-        if (event.getMessage().startsWith("*")) {
-            Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendMessage(event.getPlayer().getLocation(), range, rpPlayer.getEmoteColor() + event.getMessage()));
-        } else {
-            Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendInCharacterMessage(event.getPlayer(), range, event.getMessage()));
-        }
-    }
-
-    public static boolean containsWordsInQuotes(String input) {
-        // Define the regular expression pattern to match words between double quotes
-        String patternString = "\"([^\"]+)\"";
-        Pattern pattern = Pattern.compile(patternString);
-
-        // Create a Matcher object to find the matches in the input string
-        Matcher matcher = pattern.matcher(input);
-
-        // Check if any match is found
-        return matcher.find();
-    }
-
-    public static String replaceWordsInQuotesWithSurroundings(String input, String before, String after) {
-        // Define the regular expression pattern to match words between double quotes
-        String patternString = "\"([^\"]+)\"";
-        Pattern pattern = Pattern.compile(patternString);
-
-        // Create a Matcher object to find the matches in the input string
-        Matcher matcher = pattern.matcher(input);
-
-        // Replace all occurrences of the pattern with the specified surroundings
-        StringBuffer result = new StringBuffer();
-        while (matcher.find()) {
-            String matchedWord = matcher.group(1);
-            String replacement = before + "\"" + matchedWord + "\"" + after;
-            matcher.appendReplacement(result, Matcher.quoteReplacement(replacement));
-        }
-        matcher.appendTail(result);
-
-        return result.toString();
     }
     
 }

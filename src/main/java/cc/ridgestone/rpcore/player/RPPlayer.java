@@ -18,6 +18,7 @@ public class RPPlayer {
     private boolean ooc = true;
     private ChatColor emoteColor;
     private boolean oocCooldown;
+    private ChatChannel chatChannel;
 
     public RPPlayer(UUID uuid, Map<Integer, Character> characters, int currentCharacter, ChatColor emoteColor) {
         this.uuid = uuid;
@@ -25,24 +26,29 @@ public class RPPlayer {
         this.currentCharacter = currentCharacter;
         this.emoteColor = emoteColor;
         oocCooldown = false;
+        chatChannel = ChatChannel.DEFAULT;
     }
 
     public void setCurrentCharacter(int currentCharacter) {
-        Player player = Bukkit.getPlayer(uuid);
-        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_")));
-        saveCurrentCharacter();
+        Bukkit.getScheduler().runTask(RPCore.i, () -> {
+            Player player = Bukkit.getPlayer(uuid);
+            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
+            saveCurrentCharacter();
 
-        this.currentCharacter = currentCharacter;
+            this.currentCharacter = currentCharacter;
 
-        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_")));
-        player.getInventory().setContents(getCurrentCharacter().getInventoryContent());
-        player.getInventory().setArmorContents(getCurrentCharacter().getArmorContent());
+            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
+            player.getInventory().setContents(getCurrentCharacter().getInventoryContent());
+            player.getInventory().setArmorContents(getCurrentCharacter().getArmorContent());
 
-        RPCore.i.getPlayerConfig().set(uuid.toString() + ".currentCharacter", currentCharacter);
-        RPCore.i.savePlayerFile();
+            RPCore.i.getPlayerConfig().set(uuid.toString() + ".currentCharacter", currentCharacter);
+            RPCore.i.savePlayerFile();
 
-        Bukkit.getScheduler().runTask(RPCore.i, () -> player.teleport(getCurrentCharacter().getLocation().add(0,1,1)));
-        player.getInventory().setItem(8, CustomItem.COMPASS.getItem());
+            player.teleport(getCurrentCharacter().getLocation().add(0,1,0));
+            player.getInventory().setItem(8, CustomItem.MENU_ITEM.getItem());
+
+            player.sendMessage(ChatColor.GREEN + "Switched to character: " + getCurrentCharacter().getName());
+        });
     }
 
     public void saveCurrentCharacter() {
@@ -65,6 +71,10 @@ public class RPPlayer {
         RPCore.i.getPlayerConfig().set(uuid + ".character." + currentCharacter + ".inventoryArmor", inventory64[1]);
 
         RPCore.i.savePlayerFile();
+    }
+
+    public void setChatChannel(ChatChannel chatChannel) {
+        this.chatChannel = chatChannel;
     }
 
     public void setOoc(boolean ooc) {
@@ -108,5 +118,9 @@ public class RPPlayer {
 
     public boolean isOocCooldown() {
         return oocCooldown;
+    }
+
+    public ChatChannel getChatChannel() {
+        return chatChannel;
     }
 }

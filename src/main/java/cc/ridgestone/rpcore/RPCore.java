@@ -1,9 +1,6 @@
 package cc.ridgestone.rpcore;
 
-import cc.ridgestone.rpcore.command.CardCommand;
-import cc.ridgestone.rpcore.command.CharacterCommand;
-import cc.ridgestone.rpcore.command.RollCommand;
-import cc.ridgestone.rpcore.command.SetroleCommand;
+import cc.ridgestone.rpcore.command.*;
 import cc.ridgestone.rpcore.command.chat.*;
 import cc.ridgestone.rpcore.config.ConfigManager;
 import cc.ridgestone.rpcore.listener.BioListener;
@@ -59,13 +56,16 @@ public class RPCore extends JavaPlugin {
         getCommand("roll").setExecutor(new RollCommand());
 
         getCommand("setrole").setExecutor(new SetroleCommand());
+        getCommand("rpreload").setExecutor(new RpReloadCommand());
 
         getCommand("shout").setExecutor(new ShoutCommand());
         getCommand("whisper").setExecutor(new WhisperCommand());
         getCommand("quiet").setExecutor(new QuietCommand());
         getCommand("ooc").setExecutor(new OocCommand());
         getCommand("looc").setExecutor(new LoocCommand());
+        getCommand("wooc").setExecutor(new WoocCommand());
         getCommand("me").setExecutor(new MeCommand());
+        getCommand("defaultchat").setExecutor(new DefaultChatCommand());
 
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new RPCorePlaceholders(this).register();
@@ -109,5 +109,9 @@ public class RPCore extends JavaPlugin {
 
     public PlayerManager getPlayerManager() {
         return playerManager;
+    }
+
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
 }

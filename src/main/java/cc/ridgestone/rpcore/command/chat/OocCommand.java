@@ -2,6 +2,7 @@ package cc.ridgestone.rpcore.command.chat;
 
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.config.Variable;
+import cc.ridgestone.rpcore.player.ChatChannel;
 import cc.ridgestone.rpcore.player.RPPlayer;
 import cc.ridgestone.rpcore.util.ChatUtil;
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class OocCommand implements CommandExecutor {
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] arguments) {
         if (!(commandSender instanceof Player))
             return false;
-        Player player = (Player) commandSender;
+        /*Player player = (Player) commandSender;
         if (!(arguments.length > 0)) {
             player.sendMessage(ChatColor.RED + "Wrong usage: /Ooc <... ...>");
             return false;
@@ -34,9 +35,16 @@ public class OocCommand implements CommandExecutor {
 
         String message = String.join(" ", arguments);
         ChatUtil.sendOocToAll(player, message);
-        rpPlayer.setOocCooldown(true);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> rpPlayer.setOocCooldown(false), 20 * Integer.valueOf(Variable.OOC_COOLDOWN.getValue()));
+        if (!player.hasPermission("ooc.bypass")) {
+            rpPlayer.setOocCooldown(true);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> rpPlayer.setOocCooldown(false), 20 * Integer.valueOf(Variable.OOC_COOLDOWN.getValue()));
+        }*/
+        Player player = (Player) commandSender;
+        RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
+
+        rpPlayer.setChatChannel(ChatChannel.OOC);
+        player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'OOC'");
         return false;
     }
 

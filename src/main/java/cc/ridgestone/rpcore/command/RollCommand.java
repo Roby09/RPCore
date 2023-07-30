@@ -2,6 +2,7 @@ package cc.ridgestone.rpcore.command;
 
 import cc.ridgestone.rpcore.config.Variable;
 import cc.ridgestone.rpcore.util.ChatUtil;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,9 +33,12 @@ public class RollCommand implements CommandExecutor {
         int range = Integer.parseInt(arguments[0]);
         int randomNumber = random.nextInt(range + 1);
 
-        int chatRange = Integer.parseInt(Variable.CHAT_RANGE.getValue());
+        String chatFormat = ChatColor.translateAlternateColorCodes('&', Variable.ROLL_FORMAT.getValue()).replace("%number%", String.valueOf(randomNumber)).replace("%givennumber%", String.valueOf(range));
+        String finalFormat = PlaceholderAPI.setPlaceholders(player, chatFormat);
 
-        ChatUtil.sendMessage(player.getLocation(), chatRange, ChatColor.YELLOW + String.valueOf(randomNumber));
+        int chatRange = Integer.parseInt(Variable.ROLL_RANGE.getValue());
+
+        ChatUtil.sendMessage(player.getLocation(), chatRange, finalFormat);
         return false;
     }
 
