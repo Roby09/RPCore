@@ -41,7 +41,7 @@ public class CharacterCommand implements CommandExecutor {
             rpPlayer.getCurrentCharacter().setBio(bio.trim());
             rpPlayer.saveCurrentCharacter();
 
-            player.sendMessage(ChatColor.GREEN + "Set your characters new name to: " + bio.trim());
+            player.sendMessage(ChatColor.GREEN + "Set your characters new bio to: " + bio.trim());
         }
         return false;
     }
