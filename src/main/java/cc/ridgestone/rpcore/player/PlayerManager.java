@@ -58,6 +58,8 @@ public class PlayerManager {
         RPCore.i.getPlayerConfig().set(uuid.toString() + ".emoteColor", rpPlayer.getEmoteColor().name());
         RPCore.i.savePlayerFile();
         rpPlayer.saveCurrentCharacter();
+        Player player = Bukkit.getPlayer(uuid);
+        Bukkit.getScheduler().runTask(RPCore.i, () -> Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + mainCharacter.getRole().replace(" ", "_")));
         Bukkit.getLogger().info("Registered player " + uuid);
     }
 
