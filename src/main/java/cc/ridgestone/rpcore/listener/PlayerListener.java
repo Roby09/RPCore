@@ -18,7 +18,7 @@ public class PlayerListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
-        player.getInventory().setItem(8, CustomItem.COMPASS.getItem());
+        player.getInventory().setItem(8, CustomItem.MENU_ITEM.getItem());
 
         if (RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString()) == null) {
             new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> RPCore.i.getPlayerManager().registerPlayer(player.getUniqueId(), character));
@@ -29,14 +29,14 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void playerRespawn(PlayerRespawnEvent event) {
-        event.getPlayer().getInventory().setItem(8, CustomItem.COMPASS.getItem());
+        event.getPlayer().getInventory().setItem(8, CustomItem.MENU_ITEM.getItem());
     }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
         ItemStack toRemove = null;
         for (ItemStack item : event.getDrops()) {
-            if (item.isSimilar(CustomItem.COMPASS.getItem()))
+            if (item.isSimilar(CustomItem.MENU_ITEM.getItem()))
                 toRemove = item;
         }
         if (toRemove != null)
@@ -50,19 +50,24 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void playerDropItem(PlayerDropItemEvent event) {
-        event.setCancelled(event.getItemDrop().getItemStack().isSimilar(CustomItem.COMPASS.getItem()));
+        if (event.getItemDrop().getItemStack().isSimilar(CustomItem.MENU_ITEM.getItem()))
+            event.setCancelled(true);
     }
 
     @EventHandler
     public void moveItem(InventoryClickEvent event) {
-        if (event.getWhoClicked() instanceof Player && event.getClickedInventory() != null && event.getCurrentItem() != null)
-            event.setCancelled(event.getCurrentItem().isSimilar(CustomItem.COMPASS.getItem()));
+        if (event.getWhoClicked() instanceof Player && event.getClickedInventory() != null && event.getCurrentItem() != null) {
+            if (event.getCurrentItem().isSimilar(CustomItem.MENU_ITEM.getItem()))
+                event.setCancelled(true);
+        }
     }
 
     @EventHandler
     public void swapItem(PlayerSwapHandItemsEvent event) {
-        if (event.getOffHandItem() != null)
-            event.setCancelled(event.getOffHandItem().isSimilar(CustomItem.COMPASS.getItem()));
+        if (event.getOffHandItem() != null) {
+            if (event.getOffHandItem().isSimilar(CustomItem.MENU_ITEM.getItem()))
+                event.setCancelled(true);
+        }
     }
 
 }

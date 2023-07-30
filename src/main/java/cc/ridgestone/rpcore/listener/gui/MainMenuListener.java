@@ -16,7 +16,7 @@ public class MainMenuListener implements Listener {
     @EventHandler
     public void onOpenMenu(PlayerInteractEvent event) {
         if (!RPCore.i.getPlayerManager().getPlayersInSetup().contains(event.getPlayer())) {
-            if (event.getItem() != null && event.getItem().isSimilar(CustomItem.COMPASS.getItem()))
+            if (event.getItem() != null && event.getItem().isSimilar(CustomItem.MENU_ITEM.getItem()))
                 event.getPlayer().openInventory(new MenuInventory(event.getPlayer()).getInventory());
         }
     }

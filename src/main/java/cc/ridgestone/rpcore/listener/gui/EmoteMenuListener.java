@@ -68,9 +68,15 @@ public class EmoteMenuListener implements Listener {
                 player.closeInventory();
                 break;
             }
-            case 20 -> {
+            case 19 -> {
                 rpPlayer.setEmoteColor(ChatColor.BLUE);
-                player.sendMessage(ChatColor.YELLOW + "Set emote color to: " + ChatColor.AQUA + "cyan");
+                player.sendMessage(ChatColor.YELLOW + "Set emote color to: " + ChatColor.BLUE + "cyan");
+                player.closeInventory();
+                break;
+            }
+            case 20 -> {
+                rpPlayer.setEmoteColor(ChatColor.GRAY);
+                player.sendMessage(ChatColor.YELLOW + "Set emote color to: " + ChatColor.GRAY + "light gray");
                 player.closeInventory();
                 break;
             }
@@ -89,6 +95,12 @@ public class EmoteMenuListener implements Listener {
             case 23 -> {
                 rpPlayer.setEmoteColor(ChatColor.GREEN);
                 player.sendMessage(ChatColor.YELLOW + "Set emote color to: " + ChatColor.GREEN + "lime");
+                player.closeInventory();
+                break;
+            }
+            case 24 -> {
+                rpPlayer.setEmoteColor(ChatColor.DARK_GRAY);
+                player.sendMessage(ChatColor.YELLOW + "Set emote color to: " + ChatColor.DARK_GRAY + "gray");
                 player.closeInventory();
                 break;
             }
