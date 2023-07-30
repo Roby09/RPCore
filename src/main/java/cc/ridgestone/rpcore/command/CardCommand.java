@@ -2,6 +2,7 @@ package cc.ridgestone.rpcore.command;
 
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.player.Character;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +19,7 @@ public class CardCommand implements CommandExecutor {
         Character character = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter();
         player.sendMessage(ChatColor.GOLD + "=-Character Info-=");
         player.sendMessage(ChatColor.GRAY + "Name: " + ChatColor.WHITE + character.getName());
-        player.sendMessage(ChatColor.GRAY + "Role: " + ChatColor.WHITE + character.getRole());
+        player.sendMessage(PlaceholderAPI.setPlaceholders(player, ChatColor.GRAY + "Role: " + ChatColor.WHITE + "%uperms_prefixes%"));
         player.sendMessage(ChatColor.GRAY + "Bio: " + ChatColor.WHITE + character.getBio());
         player.sendMessage(ChatColor.GRAY + "Age: " + ChatColor.WHITE + character.getAge());
         return false;

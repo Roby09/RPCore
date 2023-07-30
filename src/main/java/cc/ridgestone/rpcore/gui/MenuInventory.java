@@ -4,6 +4,7 @@ import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.item.CustomItem;
 import cc.ridgestone.rpcore.player.RPPlayer;
 import cc.ridgestone.rpcore.util.ItemBuilder;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ public class MenuInventory implements InventoryHolder {
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
         String name = ChatColor.GRAY + "Name: " + rpPlayer.getCurrentCharacter().getName();
         String bio = ChatColor.GRAY + "Bio: " + rpPlayer.getCurrentCharacter().getBio();
-        String role = ChatColor.GRAY + "Role: " + rpPlayer.getCurrentCharacter().getRole();
+        String role = PlaceholderAPI.setPlaceholders(player, ChatColor.GRAY + "Role: " + "%uperms_prefixes%");
         String age = ChatColor.GRAY + "Age: " + rpPlayer.getCurrentCharacter().getAge();
 
         ItemStack info = new ItemBuilder(new ItemStack(Material.BOOK)).withName(ChatColor.YELLOW + "Character Info").withLore(name, bio, role, age).getItemStack();
