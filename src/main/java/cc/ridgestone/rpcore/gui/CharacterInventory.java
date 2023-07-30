@@ -3,6 +3,7 @@ package cc.ridgestone.rpcore.gui;
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.item.CustomItem;
 import cc.ridgestone.rpcore.player.RPPlayer;
+import cc.ridgestone.rpcore.util.SkullCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
