@@ -13,17 +13,23 @@ commands:
   roll:
     description: Roll a random number.
   shout:
-    description: Shout a message.
+    description: Sets chat channel to shout.
   whisper:
-    description: Whisper a message.
+    description: Sets chat channel to whisper.
   quiet:
-    description: Send a quiet message.
+    description: Sets chat channel to quiet.
   ooc:
-    description: Send a ooc message.
+    description: Sets chat channel to ooc.
   looc:
-    description: Send a local ooc message.
+    description: Sets chat channel to local ooc.
+  wooc:
+    description: Sets chat channel wooc.
   me:
-    description: Send a local emote message.
+    description: Sets chat channel to me.
+  defaultchat:
+    description: Sets chat channel to default.
   setrole:
-    description: Sets the role of a player
+    description: Sets the role of a player.
+  rpreload:
+    description: Reloads the RPCore config.
 
