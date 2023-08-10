@@ -14,10 +14,13 @@ commands:
     description: Roll a random number.
   shout:
     description: Sets chat channel to shout.
+    aliases: [s]
   whisper:
     description: Sets chat channel to whisper.
+    aliases: [w]
   quiet:
     description: Sets chat channel to quiet.
+    aliases: [q]
   ooc:
     description: Sets chat channel to ooc.
   looc:
@@ -26,7 +29,7 @@ commands:
     description: Sets chat channel wooc.
   me:
     description: Sets chat channel to me.
-  defaultchat:
+  rp:
     description: Sets chat channel to default.
   setrole:
     description: Sets the role of a player.

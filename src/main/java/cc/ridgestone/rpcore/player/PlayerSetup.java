@@ -33,6 +33,7 @@ public class PlayerSetup implements Listener {
         this.player = player;
         Bukkit.getPluginManager().registerEvents(this, RPCore.i);
         player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's name: ex (John Bill)");
+        player.sendTitle(ChatColor.DARK_AQUA + "Please input your character's name", ChatColor.DARK_AQUA + "ex (John Bill)",1, 99999, 1);
         RPCore.i.getPlayerManager().getPlayersInSetup().add(player);
     }
 
@@ -52,6 +53,8 @@ public class PlayerSetup implements Listener {
                 name = event.getMessage();
                 player.sendMessage(ChatColor.GREEN + "Successfully set your character's name to: " + ChatColor.BOLD + "" + name);
                 player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's bio: ex (John Bill is tall.)");
+                player.resetTitle();
+                player.sendTitle(ChatColor.DARK_AQUA + "Please input your character's bio", ChatColor.DARK_AQUA + "ex (John Bill is tall.)",1, 99999, 1);
                 sendSpace();
                 setupStage = 2;
                 break;
@@ -59,6 +62,8 @@ public class PlayerSetup implements Listener {
                 bio = event.getMessage();
                 player.sendMessage(ChatColor.GREEN + "Successfully your character's bio to: " + ChatColor.BOLD + "" + bio);
                 player.sendMessage(ChatColor.DARK_AQUA + "Please type your character's role: adult or student");
+                player.resetTitle();
+                player.sendTitle(ChatColor.DARK_AQUA + "Please type your character's role", ChatColor.DARK_AQUA + "Adult or Student",1, 99999, 1);
                 sendSpace();
                 setupStage = 3;
                 break;
@@ -68,11 +73,15 @@ public class PlayerSetup implements Listener {
                     role = "Adult";
                     player.sendMessage(ChatColor.GREEN + "Successfully your character's role to: " + ChatColor.BOLD + "adult");
                     player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's age: 20-80");
+                    player.resetTitle();
+                    player.sendTitle(ChatColor.DARK_AQUA + "Please input your character's age", ChatColor.DARK_AQUA + "[20-80]",1, 99999, 1);
                 } else if (event.getMessage().equalsIgnoreCase("student")) {
                     student = true;
                     role = "Student";
                     player.sendMessage(ChatColor.GREEN + "Successfully your character's role to: " + ChatColor.BOLD + "student");
                     player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's age: [Year 1: 18-22] [Year 2: 19-23] [Year 3: 20-24] [Year 4: [21-26]");
+                    player.resetTitle();
+                    player.sendTitle(ChatColor.DARK_AQUA + "Please input your character's age:", ChatColor.DARK_AQUA + "[Year 1: 18-22] [Year 2: 19-23] [Year 3: 20-24] [Year 4: [21-26]",1, 99999, 1);
                 } else {
                     player.sendMessage(ChatColor.RED + "Please type your character's role: adult or student");
                     return;
@@ -103,6 +112,7 @@ public class PlayerSetup implements Listener {
                 sendSpace();
                 completableFuture.complete(new Character(name, bio, role, age, player.getLocation(), new ItemStack[0], new ItemStack[0]));
                 player.sendMessage(ChatColor.GREEN + "Character " + name + " created successfully");
+                player.resetTitle();
                 cancel();
                 break;
         }

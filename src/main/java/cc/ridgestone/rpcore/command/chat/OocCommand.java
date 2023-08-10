@@ -43,9 +43,28 @@ public class OocCommand implements CommandExecutor {
         Player player = (Player) commandSender;
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
 
-        rpPlayer.setChatChannel(ChatChannel.OOC);
-        player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'OOC'");
-        return false;
+        if (arguments.length == 0) {
+            rpPlayer.setChatChannel(ChatChannel.OOC);
+            player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'OOC'");
+            return true;
+        }
+
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < arguments.length; i++) {
+            message.append(arguments[i]).append(" ");
+        }
+
+        if (rpPlayer.isOocCooldown()) {
+            player.sendMessage(ChatColor.RED + "You need to wait before you can send an OOC message again.");
+            return true;
+        }
+        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOocToAll(player, message.toString()));
+        if (!player.hasPermission("ooc.bypass")) {
+            rpPlayer.setOocCooldown(true);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> rpPlayer.setOocCooldown(false), 20 * Integer.valueOf(Variable.OOC_COOLDOWN.getValue()));
+        }
+
+        return true;
     }
 
 }

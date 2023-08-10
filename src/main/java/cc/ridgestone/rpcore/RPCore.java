@@ -64,8 +64,9 @@ public class RPCore extends JavaPlugin {
         getCommand("ooc").setExecutor(new OocCommand());
         getCommand("looc").setExecutor(new LoocCommand());
         getCommand("wooc").setExecutor(new WoocCommand());
-        getCommand("me").setExecutor(new MeCommand());
-        getCommand("defaultchat").setExecutor(new DefaultChatCommand());
+        //wanted this removed
+        //getCommand("me").setExecutor(new MeCommand());
+        getCommand("rp").setExecutor(new DefaultChatCommand());
 
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new RPCorePlaceholders(this).register();

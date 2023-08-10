@@ -5,6 +5,7 @@ import cc.ridgestone.rpcore.config.Variable;
 import cc.ridgestone.rpcore.player.ChatChannel;
 import cc.ridgestone.rpcore.player.RPPlayer;
 import cc.ridgestone.rpcore.util.ChatUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -32,8 +33,18 @@ public class WoocCommand implements CommandExecutor {
         Player player = (Player) commandSender;
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
 
-        rpPlayer.setChatChannel(ChatChannel.WOOC);
-        player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'WOOC'");
+        if (arguments.length == 0) {
+            rpPlayer.setChatChannel(ChatChannel.WOOC);
+            player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'WOOC'");
+            return true;
+        }
+
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < arguments.length; i++) {
+            message.append(arguments[i]).append(" ");
+        }
+        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, message.toString()));
+
         return false;
     }
 

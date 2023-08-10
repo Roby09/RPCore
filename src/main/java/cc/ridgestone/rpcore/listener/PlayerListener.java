@@ -3,6 +3,8 @@ package cc.ridgestone.rpcore.listener;
 import cc.ridgestone.rpcore.RPCore;
 import cc.ridgestone.rpcore.item.CustomItem;
 import cc.ridgestone.rpcore.player.PlayerSetup;
+import cc.ridgestone.rpcore.player.RPPlayer;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,6 +13,9 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerListener implements Listener {
 
@@ -24,6 +29,28 @@ public class PlayerListener implements Listener {
             new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> RPCore.i.getPlayerManager().registerPlayer(player.getUniqueId(), character));
         } else {
             RPCore.i.getPlayerManager().loadPlayer(player);
+        }
+
+        String playerUUID = player.getUniqueId().toString();
+
+
+        if (!RPCore.i.getPlayerConfig().contains(playerUUID + ".currentCharacter")) {
+            return;
+        }
+        int currentCharacter = RPCore.i.getPlayerConfig().getInt(playerUUID + ".currentCharacter");
+        String curCharStr = String.valueOf(currentCharacter);
+
+
+        ConfigurationSection config = RPCore.i.getPlayerConfig().getConfigurationSection(playerUUID + ".character");
+        List<String> charSlots = new ArrayList<>();
+
+        if (config != null) {
+            for (String key : config.getKeys(false)){
+                charSlots.add(key);
+            }
+            if (!charSlots.contains(curCharStr)){
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0);
+            }
         }
     }
 

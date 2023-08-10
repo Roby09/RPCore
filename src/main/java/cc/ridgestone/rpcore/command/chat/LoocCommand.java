@@ -20,8 +20,9 @@ public class LoocCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] arguments) {
-        if (!(commandSender instanceof Player))
+        if (!(commandSender instanceof Player)) {
             return false;
+        }
         /*Player player = (Player) commandSender;
         if (!(arguments.length > 0)) {
             player.sendMessage(ChatColor.RED + "Wrong usage: /Looc <... ...>");
@@ -33,9 +34,18 @@ public class LoocCommand implements CommandExecutor {
         Player player = (Player) commandSender;
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
 
-        rpPlayer.setChatChannel(ChatChannel.LOOC);
-        player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'LOOC'");
-        return false;
+        if (arguments.length == 0) {
+            rpPlayer.setChatChannel(ChatChannel.LOOC);
+            player.sendMessage(ChatColor.YELLOW + "Set chat channel to: 'LOOC'");
+            return true;
+        }
+
+        StringBuilder message = new StringBuilder();
+        for (int i = 0; i < arguments.length; i++) {
+            message.append(arguments[i]).append(" ");
+        }
+        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, message.toString()));
+        return true;
     }
 
 }

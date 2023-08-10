@@ -55,16 +55,16 @@ public class ChatUtil {
         }
     }
 
-    public static void sendEmote(Player player, int range, String message) {
+    public static void sendEmote(Player player, int range, Variable variable, String message) {
         ChatColor emoteColor = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getEmoteColor();
 
         String format;
 
         if (ChatUtil.containsWordsInQuotes(message)) {
             String msg = ChatUtil.replaceWordsInQuotesWithSurroundings(emoteColor + message, ChatColor.WHITE + "", emoteColor + "");
-            format = ChatColor.translateAlternateColorCodes('&', Variable.EMOTE_FORMAT.getValue().replace("%player%", player.getName())).replace("%message%", emoteColor + "" + ChatColor.ITALIC + msg);;
+            format = ChatColor.translateAlternateColorCodes('&', variable.getValue().replace("%player%", player.getName())).replace("%message%", emoteColor + "" + ChatColor.ITALIC + msg);;
         } else {
-            format = ChatColor.translateAlternateColorCodes('&', Variable.EMOTE_FORMAT.getValue().replace("%player%", player.getName())).replace("%message%", emoteColor + "" + ChatColor.ITALIC + message);
+            format = ChatColor.translateAlternateColorCodes('&', variable.getValue().replace("%player%", player.getName())).replace("%message%", emoteColor + "" + ChatColor.ITALIC + message);
         }
 
         String finalFormat = PlaceholderAPI.setPlaceholders(player, format);

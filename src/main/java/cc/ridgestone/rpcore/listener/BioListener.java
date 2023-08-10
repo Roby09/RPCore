@@ -26,11 +26,20 @@ public class BioListener implements Listener {
             if (event.getPlayer().isSneaking()) {
                 RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
                 if (rpPlayer != null && !cooldown.contains(event.getPlayer().getUniqueId())) {
-                    String format = ChatColor.translateAlternateColorCodes('&', Variable.BIO_FORMAT.getValue());
-                    String finalFormat = PlaceholderAPI.setPlaceholders(player, format);
+                    String format = Variable.BIO_FORMAT.getValue();
+                    String[] formatArr = format.split(",");
+
+                    for (String finalFormat : formatArr) {
+                        finalFormat = ChatColor.translateAlternateColorCodes('&', finalFormat);
+                        finalFormat = PlaceholderAPI.setPlaceholders(player, finalFormat);
+                        event.getPlayer().sendMessage(finalFormat);
+                    }
+
+                    //String formatyt = ChatColor.translateAlternateColorCodes('&', Variable.BIO_FORMAT.getValue());
+                    //String finalFormat = PlaceholderAPI.setPlaceholders(player, format);
 
                     Character character = rpPlayer.getCurrentCharacter();
-                    event.getPlayer().sendMessage(finalFormat);
+                    //event.getPlayer().sendMessage(finalFormat);
                     cooldown.add(event.getPlayer().getUniqueId());
                     Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> cooldown.remove(event.getPlayer().getUniqueId()), 20l);
                 }

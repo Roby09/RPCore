@@ -1,6 +1,7 @@
 package cc.ridgestone.rpcore.command;
 
 import cc.ridgestone.rpcore.RPCore;
+import cc.ridgestone.rpcore.config.Variable;
 import cc.ridgestone.rpcore.player.Character;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.ChatColor;
@@ -17,11 +18,15 @@ public class CardCommand implements CommandExecutor {
             return false;
         Player player = (Player) commandSender;
         Character character = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter();
-        player.sendMessage(ChatColor.GOLD + "=-Character Info-=");
-        player.sendMessage(ChatColor.GRAY + "Name: " + ChatColor.WHITE + character.getName());
-        player.sendMessage(PlaceholderAPI.setPlaceholders(player, ChatColor.GRAY + "Role: " + ChatColor.WHITE + "%uperms_prefixes%"));
-        player.sendMessage(ChatColor.GRAY + "Bio: " + ChatColor.WHITE + character.getBio());
-        player.sendMessage(ChatColor.GRAY + "Age: " + ChatColor.WHITE + character.getAge());
+
+        String format = Variable.BIO_FORMAT.getValue();
+        String[] formatArr = format.split(",");
+
+        for (String finalFormat : formatArr) {
+            finalFormat = ChatColor.translateAlternateColorCodes('&', finalFormat);
+            finalFormat = PlaceholderAPI.setPlaceholders(player, finalFormat);
+            player.sendMessage(finalFormat);
+        }
         return false;
     }
 }
