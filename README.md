@@ -4,6 +4,7 @@ Permissions:
 - Character slot 4: rpslot.4
 - Emote colors: emotecolor.use
 - /setrole command: rpcore.setrole
+- /setage command: rpcore.setage
 - /rpreload command: rpcore.reload
 - OOC cooldown bypass: ooc.bypass
 

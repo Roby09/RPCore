@@ -56,6 +56,7 @@ public class RPCore extends JavaPlugin {
         getCommand("roll").setExecutor(new RollCommand());
 
         getCommand("setrole").setExecutor(new SetroleCommand());
+        getCommand("setage").setExecutor(new SetageCommand());
         getCommand("rpreload").setExecutor(new RpReloadCommand());
 
         getCommand("shout").setExecutor(new ShoutCommand());

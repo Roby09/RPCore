@@ -32,7 +32,9 @@ commands:
   rp:
     description: Sets chat channel to default.
   setrole:
-    description: Sets the role of a player.
+    description: Sets the role of player's current character.
+  setage:
+    description: Sets the age of a player's current character.
   rpreload:
     description: Reloads the RPCore config.
 
