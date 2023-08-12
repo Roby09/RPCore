@@ -22,6 +22,8 @@ public class ChatListener implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         if (RPCore.i.getPlayerManager().getPlayersInSetup().contains(event.getPlayer()))
             return;
+        if (CharacterDeleteListener.confirmList.contains(event.getPlayer().getUniqueId()))
+            return;
 
         event.setCancelled(true);
 

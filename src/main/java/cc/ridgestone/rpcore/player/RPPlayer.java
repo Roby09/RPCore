@@ -29,25 +29,32 @@ public class RPPlayer {
         chatChannel = ChatChannel.DEFAULT;
     }
 
-    public void setCurrentCharacter(int currentCharacter) {
+    public void setCurrentCharacter(int currentCharacter, boolean delete) {
         Bukkit.getScheduler().runTask(RPCore.i, () -> {
-            Player player = Bukkit.getPlayer(uuid);
-            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
-            saveCurrentCharacter();
+            try {
+                Player player = Bukkit.getPlayer(uuid);
 
-            this.currentCharacter = currentCharacter;
+                if (!delete) {
+                    Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc RemoveGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
+                    saveCurrentCharacter();
+                }
 
-            Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
-            player.getInventory().setContents(getCurrentCharacter().getInventoryContent());
-            player.getInventory().setArmorContents(getCurrentCharacter().getArmorContent());
+                this.currentCharacter = currentCharacter;
 
-            RPCore.i.getPlayerConfig().set(uuid.toString() + ".currentCharacter", currentCharacter);
-            RPCore.i.savePlayerFile();
+                Bukkit.getServer().dispatchCommand(Bukkit.getServer().getConsoleSender(), "upc AddGroup " + player.getName() + " " + getCurrentCharacter().getRole().replace(" ", "_"));
+                player.getInventory().setContents(getCurrentCharacter().getInventoryContent());
+                player.getInventory().setArmorContents(getCurrentCharacter().getArmorContent());
 
-            player.teleport(getCurrentCharacter().getLocation().add(0,1,0));
-            player.getInventory().setItem(8, CustomItem.MENU_ITEM.getItem());
+                RPCore.i.getPlayerConfig().set(uuid.toString() + ".currentCharacter", currentCharacter);
+                RPCore.i.savePlayerFile();
 
-            player.sendMessage(ChatColor.GREEN + "Switched to character: " + getCurrentCharacter().getName());
+                player.teleport(getCurrentCharacter().getLocation().add(0, 1, 0));
+                player.getInventory().setItem(8, CustomItem.MENU_ITEM.getItem());
+
+                player.sendMessage(ChatColor.GREEN + "Switched to character: " + getCurrentCharacter().getName());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 

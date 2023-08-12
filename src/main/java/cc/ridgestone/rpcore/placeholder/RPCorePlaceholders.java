@@ -37,6 +37,9 @@ public class RPCorePlaceholders extends PlaceholderExpansion {
     public String onRequest(OfflinePlayer player, String params) {
         if (RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()) == null)
             return "CREATING CHARACTER...";
+        if (RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter() == null)
+            return "";
+
         if(params.equalsIgnoreCase("name")){
             return RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCurrentCharacter().getName();
         }

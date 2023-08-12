@@ -15,7 +15,7 @@ public enum CustomItem {
     ROLE(new ItemBuilder(new ItemStack(Material.BOOK)).withName(ChatColor.GRAY + "Roles").getItemStack()),
     SETTINGS(new ItemBuilder(new ItemStack(Material.CRIMSON_BUTTON)).withName(ChatColor.GRAY + "Settings").getItemStack()),
     SHOP(new ItemBuilder(new ItemStack(Material.SUNFLOWER)).withName(ChatColor.GRAY + "Shop").getItemStack()),
-    CHARACTER_1(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/d2a6f0e84daefc8b21aa99415b16ed5fdaa6d8dc0c3cd591f49ca832b575")).withName(ChatColor.GRAY + "Character 1").getItemStack()),
+    CHARACTER_1(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/d2a6f0e84daefc8b21aa99415b16ed5fdaa6d8dc0c3cd591f49ca832b575")).withName(ChatColor.GRAY + "Create character 1").getItemStack()),
     CHARACTER_2(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/96fab991d083993cb83e4bcf44a0b6cefac647d4189ee9cb823e9cc1571e38")).withName(ChatColor.GRAY + "Create character 2").getItemStack()),
     CHARACTER_3(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/cd319b9343f17a35636bcbc26b819625a9333de3736111f2e932827c8e749")).withName(ChatColor.GRAY + "Create character 3").getItemStack()),
     CHARACTER_4(new ItemBuilder(SkullCreator.itemFromUrl("http://textures.minecraft.net/texture/d198d56216156114265973c258f57fc79d246bb65e3c77bbe8312ee35db6")).withName(ChatColor.GRAY + "Create character 4").getItemStack()),

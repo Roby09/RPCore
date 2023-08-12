@@ -49,7 +49,7 @@ public class PlayerListener implements Listener {
                 charSlots.add(key);
             }
             if (!charSlots.contains(curCharStr)){
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0);
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0, false);
             }
         }
     }

@@ -4,6 +4,7 @@ import cc.ridgestone.rpcore.command.*;
 import cc.ridgestone.rpcore.command.chat.*;
 import cc.ridgestone.rpcore.config.ConfigManager;
 import cc.ridgestone.rpcore.listener.BioListener;
+import cc.ridgestone.rpcore.listener.CharacterDeleteListener;
 import cc.ridgestone.rpcore.listener.gui.CharacterMenuListener;
 import cc.ridgestone.rpcore.listener.ChatListener;
 import cc.ridgestone.rpcore.listener.gui.EmoteMenuListener;
@@ -50,6 +51,7 @@ public class RPCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EmoteMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new ChatListener(), this);
         Bukkit.getPluginManager().registerEvents(new BioListener(), this);
+        Bukkit.getPluginManager().registerEvents(new CharacterDeleteListener(), this);
 
         getCommand("card").setExecutor(new CardCommand());
         getCommand("character").setExecutor(new CharacterCommand());

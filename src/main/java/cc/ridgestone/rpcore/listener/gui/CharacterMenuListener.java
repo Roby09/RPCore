@@ -41,7 +41,16 @@ public class CharacterMenuListener implements Listener {
                     player.closeInventory();
                     break;
                 }
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0);
+                if (!(rpPlayer.getCharacters().containsKey(0))) {
+                    new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> {
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCharacters().put(0, character);
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0, false);
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).saveCurrentCharacter();
+                    });
+                    player.closeInventory();
+                    break;
+                }
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0, false);
                 player.closeInventory();
                 break;
             }
@@ -54,13 +63,13 @@ public class CharacterMenuListener implements Listener {
                 if (!(rpPlayer.getCharacters().containsKey(1))) {
                     new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> {
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCharacters().put(1, character);
-                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(1);
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(1, false);
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).saveCurrentCharacter();
                     });
                     player.closeInventory();
                     break;
                 }
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(1);
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(1, false);
                 player.closeInventory();
                 break;
             }
@@ -77,13 +86,13 @@ public class CharacterMenuListener implements Listener {
                 if (!(rpPlayer.getCharacters().containsKey(2))) {
                     new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> {
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCharacters().put(2, character);
-                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(2);
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(2, false);
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).saveCurrentCharacter();
                     });
                     player.closeInventory();
                     break;
                 }
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(2);
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(2, false);
                 player.closeInventory();
                 break;
             }
@@ -100,13 +109,13 @@ public class CharacterMenuListener implements Listener {
                 if (!(rpPlayer.getCharacters().containsKey(3))) {
                     new PlayerSetup(player).getCompletableFuture().whenComplete((character, throwable) -> {
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).getCharacters().put(3, character);
-                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(3);
+                        RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(3, false);
                         RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).saveCurrentCharacter();
                     });
                     player.closeInventory();
                     break;
                 }
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(3);
+                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(3, false);
                 player.closeInventory();
                 break;
             }
