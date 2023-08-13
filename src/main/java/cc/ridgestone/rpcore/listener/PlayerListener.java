@@ -30,28 +30,6 @@ public class PlayerListener implements Listener {
         } else {
             RPCore.i.getPlayerManager().loadPlayer(player);
         }
-
-        String playerUUID = player.getUniqueId().toString();
-
-
-        if (!RPCore.i.getPlayerConfig().contains(playerUUID + ".currentCharacter")) {
-            return;
-        }
-        int currentCharacter = RPCore.i.getPlayerConfig().getInt(playerUUID + ".currentCharacter");
-        String curCharStr = String.valueOf(currentCharacter);
-
-
-        ConfigurationSection config = RPCore.i.getPlayerConfig().getConfigurationSection(playerUUID + ".character");
-        List<String> charSlots = new ArrayList<>();
-
-        if (config != null) {
-            for (String key : config.getKeys(false)){
-                charSlots.add(key);
-            }
-            if (!charSlots.contains(curCharStr)){
-                RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId()).setCurrentCharacter(0, false);
-            }
-        }
     }
 
     @EventHandler

@@ -44,7 +44,7 @@ public class LoocCommand implements CommandExecutor {
         for (int i = 0; i < arguments.length; i++) {
             message.append(arguments[i]).append(" ");
         }
-        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, message.toString()));
+        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, message.toString(), false));
         return true;
     }
 

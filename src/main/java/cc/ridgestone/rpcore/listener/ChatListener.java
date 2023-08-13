@@ -163,11 +163,11 @@ public class ChatListener implements Listener {
                 break;
             }
             case LOOC -> {
-                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, event.getMessage()));
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.LOOC_RANGE.getValue()), Variable.LOOC_FORMAT, event.getMessage(), false));
                 break;
             }
             case WOOC -> {
-                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, event.getMessage()));
+                Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(event.getPlayer(), Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, event.getMessage(), false));
                 break;
             }
         }

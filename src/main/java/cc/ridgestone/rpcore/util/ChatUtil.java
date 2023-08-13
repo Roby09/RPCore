@@ -75,7 +75,7 @@ public class ChatUtil {
         }
     }
 
-    public static void sendOoc(Player player, int range, Variable chatFormat, String message) {
+    public static void sendOoc(Player player, int range, Variable chatFormat, String message, boolean isOOC) {
         String format = ChatColor.translateAlternateColorCodes('&', chatFormat.getValue().replace("%player%", player.getName())).replace("%message%", message);
         String finalFormat = PlaceholderAPI.setPlaceholders(player, format);
         for (Entity entity : player.getLocation().getWorld().getNearbyEntities(player.getLocation(), range, range, range)) {
@@ -85,7 +85,11 @@ public class ChatUtil {
                 if (rpPlayer == null)
                     continue;
 
-                if (rpPlayer.ooc()) {
+                if (isOOC) {
+                    if (rpPlayer.ooc()) {
+                        _player.sendMessage(finalFormat);
+                    }
+                } else {
                     _player.sendMessage(finalFormat);
                 }
             }

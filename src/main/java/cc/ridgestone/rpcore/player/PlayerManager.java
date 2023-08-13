@@ -5,6 +5,7 @@ import cc.ridgestone.rpcore.util.SerializationUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
@@ -41,6 +42,20 @@ public class PlayerManager {
         }
 
         int currentCharacter = RPCore.i.getPlayerConfig().getInt(player.getUniqueId().toString() + ".currentCharacter");
+        String curCharStr = String.valueOf(currentCharacter);
+
+
+        ConfigurationSection config = RPCore.i.getPlayerConfig().getConfigurationSection(player.getUniqueId() + ".character");
+        List<String> charSlots = new ArrayList<>();
+
+        if (config != null) {
+            for (String key : config.getKeys(false)){
+                charSlots.add(key);
+            }
+            if (!charSlots.contains(curCharStr)){
+                currentCharacter = Integer.parseInt(charSlots.get(0));
+            }
+        }
         ChatColor emoteColor = ChatColor.valueOf(RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString() + ".emoteColor"));
         players.add(new RPPlayer(player.getUniqueId(), characters, currentCharacter, emoteColor));
     }

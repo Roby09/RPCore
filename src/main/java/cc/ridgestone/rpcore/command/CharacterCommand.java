@@ -16,6 +16,11 @@ public class CharacterCommand implements CommandExecutor {
         if (!(commandSender instanceof Player))
             return false;
         Player player = (Player) commandSender;
+        if (RPCore.i.getPlayerConfig().getString(player.getUniqueId().toString()) == null){
+            player.sendMessage(ChatColor.RED + "Please only input what the prompt asks. Not a command.");
+            return false;
+        }
+
         if (arguments[0].equalsIgnoreCase("name")) {
             if (!(arguments.length > 2)) {
                 player.sendMessage(ChatColor.RED + "Wrong usage: /character name <FirstName SecondName>");

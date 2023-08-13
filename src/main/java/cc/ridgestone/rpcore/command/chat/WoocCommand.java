@@ -43,7 +43,7 @@ public class WoocCommand implements CommandExecutor {
         for (int i = 0; i < arguments.length; i++) {
             message.append(arguments[i]).append(" ");
         }
-        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, message.toString()));
+        Bukkit.getScheduler().runTask(RPCore.i, () -> ChatUtil.sendOoc(player, Integer.parseInt(Variable.WOOC_RANGE.getValue()), Variable.WOOC_FORMAT, message.toString(), false));
 
         return false;
     }
