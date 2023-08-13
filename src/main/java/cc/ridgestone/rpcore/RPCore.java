@@ -99,6 +99,14 @@ public class RPCore extends JavaPlugin {
         }
     }
 
+    public void reloadPlayerConfig() {
+        try {
+            playerConfig.load(playerFile);
+        } catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void reloadInstanceConfig() {
         config = this.getConfig();
     }

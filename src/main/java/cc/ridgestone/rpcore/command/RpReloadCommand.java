@@ -15,6 +15,7 @@ public class RpReloadCommand implements CommandExecutor {
             return false;
         }
         RPCore.i.getConfigManager().loadConfig();
+        RPCore.i.reloadPlayerConfig();
         commandSender.sendMessage(ChatColor.GREEN + "RPCore config reloaded");
         return false;
     }
