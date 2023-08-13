@@ -78,6 +78,14 @@ public class RPPlayer {
         RPCore.i.getPlayerConfig().set(uuid + ".character." + currentCharacter + ".inventoryArmor", inventory64[1]);
 
         RPCore.i.savePlayerFile();
+
+        final int currentCharacterToSave = currentCharacter;
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(RPCore.i, () -> {
+            if (!RPCore.i.getPlayerConfig().contains(uuid.toString() + ".character." + currentCharacterToSave)) {
+                saveCurrentCharacter();
+            }
+        }, 20L);
     }
 
     public void setChatChannel(ChatChannel chatChannel) {
