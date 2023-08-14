@@ -38,6 +38,7 @@ public class SetageCommand implements CommandExecutor {
         RPPlayer rpPlayer = RPCore.i.getPlayerManager().getRpPlayer(player.getUniqueId());
         if (rpPlayer != null) {
             rpPlayer.getCurrentCharacter().setAge(age);
+            rpPlayer.saveCurrentCharacter();
             commandSender.sendMessage(ChatColor.GREEN + "Set age of " + player.getName() + "/" + rpPlayer.getCurrentCharacter().getName() + " to " + age);
         } else {
             commandSender.sendMessage(ChatColor.RED + "Something went wrong (no rp character found for this player)");
