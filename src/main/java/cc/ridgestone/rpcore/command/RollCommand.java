@@ -31,6 +31,10 @@ public class RollCommand implements CommandExecutor {
             return false;
         }
         int range = Integer.parseInt(arguments[0]);
+        if (!(range >= 0 && range <= 200)) {
+            player.sendMessage(ChatColor.RED + "The range can only be 0-200");
+            return false;
+        }
         int randomNumber = random.nextInt(range + 1);
 
         String chatFormat = ChatColor.translateAlternateColorCodes('&', Variable.ROLL_FORMAT.getValue()).replace("%number%", String.valueOf(randomNumber)).replace("%givennumber%", String.valueOf(range));
