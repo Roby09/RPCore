@@ -50,7 +50,6 @@ public class PlayerSetup implements Listener {
                     player.sendMessage(ChatColor.RED + "Name format should be: First_Name Second_Name");
                     return;
                 }
-                if (event.getMessage().startsWith("/"))
                 name = event.getMessage();
                 player.sendMessage(ChatColor.GREEN + "Successfully set your character's name to: " + ChatColor.BOLD + "" + name);
                 player.sendMessage(ChatColor.DARK_AQUA + "Please input your character's bio: ex (John Bill is tall.)");
